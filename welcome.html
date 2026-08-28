@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your Second Brain — Setup Guide</title>
+  <link rel="stylesheet" href="02ui/fonts.css">
+  <link rel="stylesheet" href="02ui/tokens.css">
+  <link rel="stylesheet" href="02ui/base.css">
+  <style>
+    header.hero {
+      padding: 88px 0 56px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .time {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 28px;
+      font-family: var(--font-display);
+      font-size: 14px;
+      color: var(--ink-faint);
+      background: var(--surface);
+      padding: 7px 13px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+    }
+
+    main { padding: 16px 0 96px; }
+
+    section {
+      padding: 44px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    section:last-child { border-bottom: none; }
+
+    section > h2 {
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      font-weight: 400;
+      margin: 0 0 22px;
+    }
+
+    .steps { counter-reset: step; list-style: none; padding: 0; margin: 0; }
+
+    .steps > li {
+      counter-increment: step;
+      position: relative;
+      padding: 22px 0 22px 58px;
+      border-top: 1px solid var(--line);
+    }
+
+    .steps > li:first-child { border-top: none; }
+
+    .steps > li::before {
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: 20px;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 400;
+    }
+
+    .steps h3 { margin-bottom: 6px; }
+    .steps p { margin-bottom: 0; }
+
+    .tree {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px 24px;
+      overflow-x: auto;
+    }
+
+    .tree pre {
+      margin: 0;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      line-height: 1.85;
+      color: var(--ink-soft);
+    }
+
+    .tree .name { color: var(--ink); font-weight: 400; }
+
+    .folders { display: grid; gap: 2px; }
+
+    .folder-row {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 18px;
+      padding: 14px 0;
+      border-top: 1px solid var(--line);
+      align-items: baseline;
+    }
+
+    .folder-row:first-child { border-top: none; }
+
+    .folder-row .k {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      color: var(--ink);
+    }
+
+    .folder-row .v {
+      color: var(--ink-soft);
+      font-size: 15.5px;
+    }
+
+    .faq dt {
+      font-family: var(--font-display);
+      font-weight: 400;
+      color: var(--ink);
+      margin: 22px 0 4px;
+    }
+
+    .faq dt:first-child { margin-top: 0; }
+
+    .faq dd { margin: 0; color: var(--ink-soft); }
+
+    footer {
+      padding: 40px 0 80px;
+      color: var(--ink-faint);
+      font-size: 14px;
+    }
+
+    footer a { color: var(--ink-soft); }
+
+    .hero-actions {
+      margin-top: 28px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 560px) {
+      header.hero { padding: 60px 0 40px; }
+      h1 { font-size: 32px; }
+      .folder-row { grid-template-columns: 1fr; gap: 2px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <p class="eyebrow">02UI · Grok Bot Second Brain</p>
+      <h1>A place outside your head where your context lives.</h1>
+      <p class="lede">Set it up once. After that, Grok Bot can read who you are, what you do, and what you want — without you repeating yourself every time.</p>
+      <span class="time">About 5 minutes to set up</span>
+      <div class="hero-actions">
+        <a class="btn btn-accent" href="index.html">Open your brain</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <section>
+        <h2>What this is</h2>
+        <h3>A folder that remembers you</h3>
+        <p>A second brain is a place outside your head where your context lives — who you are, what you are working on, and the half-formed ideas you would otherwise lose.</p>
+        <p>With <strong>Grok Bot</strong>, that place is a folder on your computer. Grok can read everything inside, write new notes, and help you stay organised. You stop briefing it from scratch every time. It already knows you.</p>
+        <div class="callout">
+          <p>This kit ships with blank prompts. The first time you open it, you fill in three short files — who you are, what you do, what you want. No fake content pretending to be you.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>Before you start</h2>
+        <h3>What you need</h3>
+        <p>You need <strong>Grok Bot</strong> installed and access to this folder on your computer. That is it. No account, no monthly fee, no internet required after download.</p>
+      </section>
+
+      <section>
+        <h2>Setup</h2>
+        <ol class="steps">
+          <li>
+            <h3>Put the folder somewhere permanent</h3>
+            <p>Move this folder out of Downloads and into a proper home, like your Documents folder. Keep everything inside together.</p>
+          </li>
+          <li>
+            <h3>Open this guide</h3>
+            <p>You are here. Keep this page open while you set up, or come back to <strong>welcome.html</strong> any time.</p>
+          </li>
+          <li>
+            <h3>Fill in your stack</h3>
+            <p>Open <strong>who-you-are.md</strong>, <strong>what-you-do.md</strong>, and <strong>what-you-want.md</strong> in any text editor and replace the bracket prompts with your real answers. Or tell Grok Bot: <em>help me set up my brain</em> and let it ask you the questions.</p>
+          </li>
+          <li>
+            <h3>Open your brain in the browser</h3>
+            <p>Double-click <strong>index.html</strong>. You will see your stack on the left and the note content on the right. <a href="index.html">Open it now</a>.</p>
+          </li>
+          <li>
+            <h3>Add your first note</h3>
+            <p>Open <strong>01-ideas/inbox.md</strong> and type one idea. Save the file. Close the browser tab and double-click <strong>index.html</strong> again to refresh.</p>
+          </li>
+          <li>
+            <h3>Build the daily habit</h3>
+            <p>Drop any stray thought into <strong>01-ideas/inbox.md</strong>. Do not tidy it. Speed matters more than neatness. Ask Grok Bot to sort your inbox when it fills up.</p>
+          </li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>The foundation</h2>
+        <h3>Three files do most of the work</h3>
+        <p>Everything else is storage. These three are what make Grok sound like it knows you rather than like generic AI output.</p>
+        <div class="card">
+          <p><strong>who-you-are.md</strong> — who you are. Your name, background, and how you want Grok to talk to you.</p>
+          <p style="margin-bottom:0"><strong>what-you-do.md</strong> — your work, skills, and what is on your plate right now.</p>
+        </div>
+        <div class="card">
+          <p style="margin-bottom:0"><strong>what-you-want.md</strong> — your goals and what success looks like for you.</p>
+        </div>
+        <p>Spend your time here. Vague answers give vague results everywhere else. A few honest sentences beat a polished paragraph.</p>
+      </section>
+
+      <section>
+        <h2>The folders</h2>
+        <h3>Where everything lives</h3>
+        <div class="folders">
+          <div class="folder-row">
+            <span class="k">01-ideas/</span>
+            <span class="v">Your inbox. Messy on purpose. Raw thoughts go here.</span>
+          </div>
+          <div class="folder-row">
+            <span class="k">02-projects/</span>
+            <span class="v">Active work with a finish line. Drafts, proposals, plans.</span>
+          </div>
+          <div class="folder-row">
+            <span class="k">03-areas/</span>
+            <span class="v">Ongoing responsibilities you maintain over time.</span>
+          </div>
+          <div class="folder-row">
+            <span class="k">04-wiki/</span>
+            <span class="v">Evergreen knowledge you look things up in.</span>
+          </div>
+          <div class="folder-row">
+            <span class="k">05-resources/</span>
+            <span class="v">Reference material you collect but did not write yourself.</span>
+          </div>
+          <div class="folder-row">
+            <span class="k">06-archive/</span>
+            <span class="v">Finished or paused work, out of sight. Nothing is ever deleted.</span>
+          </div>
+        </div>
+        <p style="margin-top:20px">If six folders feels like too many at the start, ignore 03-areas, 05-resources, and 06-archive until you need them.</p>
+      </section>
+
+      <section>
+        <h2>Staying safe</h2>
+        <h3>You are always in the loop</h3>
+        <p>Grok Bot can write files in this folder. That is the power, and it is why you stay in control. Grok is told to never delete, move, or overwrite files it did not create without asking you first.</p>
+      </section>
+
+      <section>
+        <h2>If something goes wrong</h2>
+        <dl class="faq">
+          <dt>My new note does not show in the browser</dt>
+          <dd>Close the browser tab completely, then double-click <strong>index.html</strong> again. If Grok Bot wrote the file, ask it to update <strong>brain-content.js</strong> too.</dd>
+          <dt>Outputs feel generic</dt>
+          <dd>Your stack files are still empty or too vague. Fill them in, or ask Grok Bot to help you set up.</dd>
+          <dt>Grok Bot changed something I did not want</dt>
+          <dd>Your files are on your computer. You can always undo by editing the .md file by hand.</dd>
+        </dl>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p><a class="wordmark" href="index.html">02UI</a> · Grok Bot Second Brain Starter Kit</p>
+      <p>Free and MIT licensed — use it, change it, share it.</p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your Second Brain</title>
+  <link rel="stylesheet" href="02ui/fonts.css">
+  <link rel="stylesheet" href="02ui/tokens.css">
+  <link rel="stylesheet" href="02ui/base.css">
+  <style>
+    .layout {
+      display: grid;
+      grid-template-columns: var(--sidebar-w) 1fr;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      background: var(--surface);
+      border-right: 1px solid var(--line);
+      padding: 28px 20px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .sidebar-header {
+      margin-bottom: 28px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .sidebar-header .wordmark {
+      font-size: 22px;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .sidebar-header .subtitle {
+      font-family: var(--font-display);
+      font-size: 13px;
+      color: var(--ink-faint);
+      margin: 0;
+    }
+
+    .nav-group { margin-bottom: 24px; }
+
+    .nav-label {
+      font-family: var(--font-display);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin: 0 0 10px;
+      font-weight: 400;
+    }
+
+    .nav-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .nav-list li { margin: 0; }
+
+    .nav-link {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 15px;
+      color: var(--ink-soft);
+      text-decoration: none;
+      padding: 8px 10px;
+      border-radius: var(--radius);
+      border: 1px solid transparent;
+    }
+
+    .nav-link:hover {
+      background: var(--bg);
+      color: var(--ink);
+    }
+
+    .nav-link.active {
+      color: var(--accent);
+      background: var(--accent-soft);
+      border-color: var(--line);
+    }
+
+    .nav-link .file {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--ink-faint);
+      margin-top: 2px;
+    }
+
+    .main {
+      padding: 48px 40px 80px;
+      max-width: 760px;
+    }
+
+    .main-header {
+      margin-bottom: 32px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .main-header .file-path {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--accent);
+      margin: 0 0 8px;
+    }
+
+    .refresh-hint {
+      font-family: var(--font-display);
+      font-size: 13px;
+      color: var(--ink-faint);
+      margin-top: 24px;
+      padding: 14px 16px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    .prose h1 { margin-top: 0; }
+    .prose h2 { margin-top: 32px; }
+    .prose blockquote {
+      margin: 20px 0;
+      padding: 14px 18px;
+      border-left: 3px solid var(--accent);
+      background: var(--surface);
+      color: var(--ink-soft);
+    }
+    .prose blockquote p { margin: 0; }
+    .prose ul, .prose ol { color: var(--ink-soft); padding-left: 24px; }
+    .prose li { margin-bottom: 8px; }
+    .prose hr {
+      border: none;
+      border-top: 1px solid var(--line);
+      margin: 28px 0;
+    }
+
+    .empty-state {
+      color: var(--ink-faint);
+      font-family: var(--font-display);
+      font-size: 15px;
+    }
+
+    .top-links {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 768px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar {
+        position: relative;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--line);
+      }
+      .main { padding: 32px 24px 60px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a class="wordmark" href="welcome.html">02UI</a>
+        <p class="subtitle">Second Brain</p>
+      </div>
+
+      <nav class="nav-group" aria-label="Your stack">
+        <p class="nav-label">Your stack</p>
+        <ul class="nav-list" id="stack-nav"></ul>
+      </nav>
+
+      <nav class="nav-group" aria-label="Notes">
+        <p class="nav-label">Notes</p>
+        <ul class="nav-list" id="notes-nav"></ul>
+      </nav>
+
+      <div class="top-links">
+        <a class="btn" href="welcome.html">Setup guide</a>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="main-header">
+        <p class="file-path" id="current-file"></p>
+        <h1 id="current-title">Your Second Brain</h1>
+      </header>
+      <article class="prose" id="content">
+        <p class="empty-state">Pick a file from the sidebar to read it here.</p>
+      </article>
+      <p class="refresh-hint">After Grok Bot adds or edits a note, close this tab and open <strong>index.html</strong> again to see the update.</p>
+    </main>
+  </div>
+
+  <script src="brain-content.js"></script>
+  <script>
+    function escapeHtml(text) {
+      return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+    }
+
+    function renderMarkdown(md) {
+      var lines = md.split("\n");
+      var html = [];
+      var inList = false;
+      var listType = null;
+
+      function closeList() {
+        if (inList) {
+          html.push(listType === "ol" ? "</ol>" : "</ul>");
+          inList = false;
+          listType = null;
+        }
+      }
+
+      for (var i = 0; i < lines.length; i++) {
+        var line = lines[i];
+        var trimmed = line.trim();
+
+        if (trimmed === "---") {
+          closeList();
+          html.push("<hr>");
+          continue;
+        }
+
+        if (trimmed.startsWith("### ")) {
+          closeList();
+          html.push("<h3>" + inline(trimmed.slice(4)) + "</h3>");
+          continue;
+        }
+        if (trimmed.startsWith("## ")) {
+          closeList();
+          html.push("<h2>" + inline(trimmed.slice(3)) + "</h2>");
+          continue;
+        }
+        if (trimmed.startsWith("# ")) {
+          closeList();
+          html.push("<h1>" + inline(trimmed.slice(2)) + "</h1>");
+          continue;
+        }
+
+        if (trimmed.startsWith("> ")) {
+          closeList();
+          html.push("<blockquote><p>" + inline(trimmed.slice(2)) + "</p></blockquote>");
+          continue;
+        }
+
+        var ulMatch = trimmed.match(/^[-*] (.+)$/);
+        if (ulMatch) {
+          if (!inList || listType !== "ul") {
+            closeList();
+            html.push("<ul>");
+            inList = true;
+            listType = "ul";
+          }
+          html.push("<li>" + inline(ulMatch[1]) + "</li>");
+          continue;
+        }
+
+        var olMatch = trimmed.match(/^\d+\. (.+)$/);
+        if (olMatch) {
+          if (!inList || listType !== "ol") {
+            closeList();
+            html.push("<ol>");
+            inList = true;
+            listType = "ol";
+          }
+          html.push("<li>" + inline(olMatch[1]) + "</li>");
+          continue;
+        }
+
+        if (trimmed === "") {
+          closeList();
+          continue;
+        }
+
+        closeList();
+        html.push("<p>" + inline(trimmed) + "</p>");
+      }
+
+      closeList();
+      return html.join("\n");
+    }
+
+    function inline(text) {
+      var safe = escapeHtml(text);
+      safe = safe.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+      safe = safe.replace(/`(.+?)`/g, "<code>$1</code>");
+      return safe;
+    }
+
+    var allItems = (window.BRAIN.stack || []).concat(window.BRAIN.notes || []);
+
+    function buildNav(containerId, items) {
+      var ul = document.getElementById(containerId);
+      ul.innerHTML = "";
+      items.forEach(function (item) {
+        var li = document.createElement("li");
+        var a = document.createElement("a");
+        a.className = "nav-link";
+        a.href = "#" + item.id;
+        a.innerHTML = item.title + '<span class="file">' + item.file + "</span>";
+        a.addEventListener("click", function (e) {
+          e.preventDefault();
+          showItem(item.id);
+        });
+        li.appendChild(a);
+        ul.appendChild(li);
+      });
+    }
+
+    function showItem(id) {
+      var item = allItems.find(function (x) { return x.id === id; });
+      if (!item) return;
+
+      document.getElementById("current-title").textContent = item.title;
+      document.getElementById("current-file").textContent = item.file;
+      document.getElementById("content").innerHTML = renderMarkdown(item.content);
+
+      document.querySelectorAll(".nav-link").forEach(function (link) {
+        link.classList.remove("active");
+      });
+      var active = document.querySelector('.nav-link[href="#' + id + '"]');
+      if (active) active.classList.add("active");
+
+      history.replaceState(null, "", "#" + id);
+    }
+
+    buildNav("stack-nav", window.BRAIN.stack);
+    buildNav("notes-nav", window.BRAIN.notes);
+
+    var startId = location.hash ? location.hash.slice(1) : (window.BRAIN.stack[0] && window.BRAIN.stack[0].id);
+    if (startId) showItem(startId);
+  </script>
+</body>
+</html>

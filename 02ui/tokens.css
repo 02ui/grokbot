@@ -1,0 +1,20 @@
+/* 02UI design tokens — cream ground, ink type, one orange accent */
+:root {
+  --bg: #f7f7f4;
+  --surface: #f2f1ed;
+  --surface-raised: #ebeae5;
+  --ink: #26251d;
+  --ink-soft: #5a5852;
+  --ink-faint: #84847e;
+  --line: #e6e5e0;
+  --accent: #f54e00;
+  --accent-soft: #f2e8e0;
+
+  --font-display: "02UI Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: "02UI Serif", ui-serif, Georgia, "Times New Roman", serif;
+  --font-mono: "02UI Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --radius: 4px;
+  --maxw: 720px;
+  --sidebar-w: 280px;
+}
