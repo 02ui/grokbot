@@ -23,7 +23,8 @@ Then browse the numbered folders for notes and projects:
 
 1. **Never delete, move, or overwrite a file you did not create** without showing the user your plan and getting a clear yes.
 2. **Write new notes as `.md` files** in the right numbered folder. One topic per file. Use plain markdown.
-3. **Keep the HTML index in sync.** Whenever you create, edit, or remove a note that should appear in the browser, also update `brain-content.js` to match. Copy the markdown content into the matching `content` field and add or remove entries in the `stack` or `notes` arrays.
+3. **Keep the HTML index in sync.** Whenever you create, edit, rename, or remove a `.md` file, run `python3 sync.py` from this folder. It rebuilds `brain-content.js` from the markdown, so the browser view always matches the files. Never edit `brain-content.js` by hand when `sync.py` is available — your changes would be overwritten on the next run.
+   *If the user has no Python:* update `brain-content.js` yourself instead — copy the markdown into the matching `content` field and add or remove entries in the `stack` or `notes` arrays. In that case escape any backtick, `${`, or backslash in the note text, or the file will fail to load and the browser view will go blank.
 4. **Do not touch files outside this folder.**
 5. **Do not rename the foundation files** (`who-you-are.md`, `what-you-do.md`, `what-you-want.md`) or the numbered folders.
 
