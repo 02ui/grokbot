@@ -27,7 +27,8 @@ grok-second-brain/
 ├── README.md             you are here
 ├── grok.md               instructions Grok Bot reads every session
 ├── ONBOARDING.md         the one-time setup interview
-├── brain-content.js      keeps the HTML index in sync (Grok updates this)
+├── brain-content.js      generated content for the index (rebuilt by sync.py)
+├── sync.py               rebuilds brain-content.js from your .md files
 ├── who-you-are.md        who you are (blank prompts ready to fill)
 ├── what-you-do.md        what you do (blank prompts ready to fill)
 ├── what-you-want.md      what you want (blank prompts ready to fill)
@@ -45,7 +46,17 @@ The folders are numbered so they sort in the order you actually use them: captur
 
 ## How the browser view works
 
-Your notes live as `.md` files you can open in any text editor. The `index.html` page reads from `brain-content.js` so it works offline with no install step. When Grok Bot adds or edits a note, it updates both the `.md` file and `brain-content.js`. Close the browser tab and double-click `index.html` again to see the latest version.
+Your notes live as `.md` files you can open in any text editor. The `index.html` page reads from `brain-content.js` so it works offline with no install step.
+
+`brain-content.js` is **generated**. After any note changes, Grok Bot runs:
+
+```
+python3 sync.py
+```
+
+That rebuilds the file from your markdown, so the two can never drift apart and you never copy anything across by hand. Python 3 comes preinstalled on macOS and Linux — there is nothing to set up. You can run the same command yourself any time.
+
+Close the browser tab and double-click `index.html` again to see the latest version.
 
 ## One rule before you start
 
